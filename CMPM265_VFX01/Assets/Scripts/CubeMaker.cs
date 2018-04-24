@@ -12,7 +12,7 @@ public class CubeMaker : MonoBehaviour
     MeshCreator mc = new MeshCreator();
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
 
         MeshFilter meshFilter = this.GetComponent<MeshFilter>();
@@ -38,12 +38,19 @@ public class CubeMaker : MonoBehaviour
     {
         Vector3 cubeSize = size * 0.5f;
 
+        // Call the noise function
+        //float offset = (float)Perlin.Noise(Random.Range(2,5));
+
+        float offset = Perlin.Noise(center.x, center.y, center.z);
+
+        Debug.Log("this is" + offset);
+
         // top of the cube
         // t0 is top left point
-        Vector3 t0 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y, center.z - cubeSize.z);
-        Vector3 t1 = new Vector3(center.x - cubeSize.x, center.y + cubeSize.y, center.z - cubeSize.z);
-        Vector3 t2 = new Vector3(center.x - cubeSize.x, center.y + cubeSize.y, center.z + cubeSize.z);
-        Vector3 t3 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y, center.z + cubeSize.z);
+        Vector3 t0 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y + offset, center.z - cubeSize.z);
+        Vector3 t1 = new Vector3(center.x - cubeSize.x, center.y + cubeSize.y + offset, center.z - cubeSize.z);
+        Vector3 t2 = new Vector3(center.x - cubeSize.x, center.y + cubeSize.y + offset, center.z + cubeSize.z);
+        Vector3 t3 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y + offset, center.z + cubeSize.z);
 
         // bottom of the cube
         Vector3 b0 = new Vector3(center.x + cubeSize.x, center.y - cubeSize.y, center.z - cubeSize.z);
