@@ -12,7 +12,7 @@ public class CubeMaker : MonoBehaviour
     MeshCreator mc = new MeshCreator();
 
     // Update is called once per frame
-    void Start()
+    void Update()
     {
 
         MeshFilter meshFilter = this.GetComponent<MeshFilter>();
@@ -39,18 +39,20 @@ public class CubeMaker : MonoBehaviour
         Vector3 cubeSize = size * 0.5f;
 
         // Call the noise function
-        //float offset = (float)Perlin.Noise(Random.Range(2,5));
+        //float offsetY = Perlin.Noise(center.x / 20, center.y / 20, center.z / 20);
+        float offsetY = Perlin.Noise(Random.Range(.1f,.5f), Random.Range(.1f, .5f), Random.Range(.1f, .5f));
 
-        float offset = Perlin.Noise(center.x, center.y, center.z);
+        //float offsetY = Perlin.Noise(center.x, center.y, center.z);
+        //float offsetZ = Perlin.Noise(center.x, center.y, center.z);
 
-        Debug.Log("this is" + offset);
+        Debug.Log("this is" + offsetY);
 
         // top of the cube
         // t0 is top left point
-        Vector3 t0 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y + offset, center.z - cubeSize.z);
-        Vector3 t1 = new Vector3(center.x - cubeSize.x, center.y + cubeSize.y + offset, center.z - cubeSize.z);
-        Vector3 t2 = new Vector3(center.x - cubeSize.x, center.y + cubeSize.y + offset, center.z + cubeSize.z);
-        Vector3 t3 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y + offset, center.z + cubeSize.z);
+        Vector3 t0 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y + offsetY, center.z - cubeSize.z);
+        Vector3 t1 = new Vector3(center.x - cubeSize.x, center.y + cubeSize.y + offsetY, center.z - cubeSize.z);
+        Vector3 t2 = new Vector3(center.x - cubeSize.x, center.y + cubeSize.y + offsetY, center.z + cubeSize.z);
+        Vector3 t3 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y + offsetY, center.z + cubeSize.z);
 
         // bottom of the cube
         Vector3 b0 = new Vector3(center.x + cubeSize.x, center.y - cubeSize.y, center.z - cubeSize.z);
