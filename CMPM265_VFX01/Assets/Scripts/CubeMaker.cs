@@ -12,6 +12,18 @@ public class CubeMaker : MonoBehaviour
     MeshCreator mc = new MeshCreator();
     int gridCubes = 20;
     double distBetween = 1.2;
+    public Color altColor = Color.black;
+    public Color orColor = Color.black;
+    public Renderer rend;
+
+    public GameObject particleDeathEffect;
+
+    void Awake()
+    {
+        rend = GetComponent<Renderer>();
+        //Set the initial color (0f,0f,0f,0f)
+        rend.material.color = altColor;
+    }
 
     // Update is called once per frame
     void Update()
@@ -23,6 +35,61 @@ public class CubeMaker : MonoBehaviour
 
         mc.Clear(); // Clear internal lists and mesh
 
+        //Inputs to increase and decrese grid numbers
+        if (Input.GetKeyDown(KeyCode.Space))
+            gridCubes += 10;
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+            gridCubes -= 10;
+
+        //Inputs to increase and decrease the spacing between the cubes
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            distBetween -= 0.2;
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            distBetween += 0.2;
+
+        //Inputs for switching color
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            //Alter the color          
+            altColor.g += 0.1f;
+            //Assign the changed color to the material.
+            rend.material.color = altColor;
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            //Alter the color           
+            altColor.r += 0.1f;
+            //Assign the changed color to the material. 
+            rend.material.color = altColor;
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            //Alter the color            
+            altColor.b += 0.1f;
+            //Assign the changed color to the material. 
+            rend.material.color = altColor;
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            //Alter the color          
+            altColor.a += 0.1f;
+            //Assign the changed color to the material. 
+            rend.material.color = altColor;
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            //Alter the color          
+            altColor.a += 0.1f;
+            //Assign the changed color to the material. 
+            altColor = orColor;
+            rend.material.color = altColor;
+          
+        }
+
+        //Creating the cubes grid
         for (int row = 0; row < gridCubes; row++)
         {
             for (int col = 0; col < gridCubes; col++)
@@ -50,6 +117,8 @@ public class CubeMaker : MonoBehaviour
         //float offsetZ = Perlin.Noise(center.x, center.y, center.z);
 
         Debug.Log("this is" + offsetY);
+        GameObject deatheffect = (GameObject)Instantiate(particleDeathEffect, center, Quaternion.identity);
+        Destroy(deatheffect, 5f);
 
         // top of the cube
         // t0 is top left point
@@ -59,10 +128,10 @@ public class CubeMaker : MonoBehaviour
         Vector3 t3 = new Vector3(center.x + cubeSize.x, center.y + cubeSize.y + offsetY, center.z + cubeSize.z);
 
         // bottom of the cube
-        Vector3 b0 = new Vector3(center.x + cubeSize.x, center.y - cubeSize.y, center.z - cubeSize.z);
-        Vector3 b1 = new Vector3(center.x - cubeSize.x, center.y - cubeSize.y, center.z - cubeSize.z);
-        Vector3 b2 = new Vector3(center.x - cubeSize.x, center.y - cubeSize.y, center.z + cubeSize.z);
-        Vector3 b3 = new Vector3(center.x + cubeSize.x, center.y - cubeSize.y, center.z + cubeSize.z);
+        Vector3 b0 = new Vector3(center.x + cubeSize.x , center.y - cubeSize.y, center.z - cubeSize.z);
+        Vector3 b1 = new Vector3(center.x - cubeSize.x , center.y - cubeSize.y, center.z - cubeSize.z);
+        Vector3 b2 = new Vector3(center.x - cubeSize.x , center.y - cubeSize.y, center.z + cubeSize.z);
+        Vector3 b3 = new Vector3(center.x + cubeSize.x , center.y - cubeSize.y, center.z + cubeSize.z);
 
         // Top square
         mc.BuildTriangle(t0, t1, t2);
