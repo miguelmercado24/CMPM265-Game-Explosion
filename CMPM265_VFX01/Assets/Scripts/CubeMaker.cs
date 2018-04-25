@@ -18,6 +18,8 @@ public class CubeMaker : MonoBehaviour
 
     public GameObject particleDeathEffect;
 
+    bool partSpawn = false;
+
     void Awake()
     {
         rend = GetComponent<Renderer>();
@@ -86,7 +88,16 @@ public class CubeMaker : MonoBehaviour
             //Assign the changed color to the material. 
             altColor = orColor;
             rend.material.color = altColor;
-          
+         }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            partSpawn = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            partSpawn = false;
         }
 
         //Creating the cubes grid
@@ -117,8 +128,11 @@ public class CubeMaker : MonoBehaviour
         //float offsetZ = Perlin.Noise(center.x, center.y, center.z);
 
         Debug.Log("this is" + offsetY);
-        GameObject deatheffect = (GameObject)Instantiate(particleDeathEffect, center, Quaternion.identity);
-        Destroy(deatheffect, 5f);
+        if (partSpawn)
+        {
+            GameObject deatheffect = (GameObject)Instantiate(particleDeathEffect, center, Quaternion.identity);
+            Destroy(deatheffect, 5f);
+        }
 
         // top of the cube
         // t0 is top left point
