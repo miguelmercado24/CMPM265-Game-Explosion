@@ -10,6 +10,8 @@ public class CubeMaker : MonoBehaviour
 
     public Vector3 size = Vector3.one;
     MeshCreator mc = new MeshCreator();
+    int gridCubes = 20;
+    double distBetween = 1.2;
 
     // Update is called once per frame
     void Update()
@@ -21,11 +23,11 @@ public class CubeMaker : MonoBehaviour
 
         mc.Clear(); // Clear internal lists and mesh
 
-        for (int row = 0; row < 20; row++)
+        for (int row = 0; row < gridCubes; row++)
         {
-            for (int col = 0; col < 20; col++)
+            for (int col = 0; col < gridCubes; col++)
             {
-                center.Set(col * size.x * (float)1.2, 0, row * size.z * (float)1.2);
+                center.Set(col * size.x * (float)distBetween, 0, row * size.z * (float)distBetween);
                 CreateCube(center);
             }
         }
@@ -40,7 +42,9 @@ public class CubeMaker : MonoBehaviour
 
         // Call the noise function
         //float offsetY = Perlin.Noise(center.x / 20, center.y / 20, center.z / 20);
-        float offsetY = Perlin.Noise(Random.Range(.1f,.5f), Random.Range(.1f, .5f), Random.Range(.1f, .5f));
+        //float offsetY = Perlin.Noise(Random.Range(.1f,.5f)/15, Random.Range(.1f, .5f)/15, Random.Range(.1f, .5f)/15);
+        float offsetY = Perlin.Noise(center.x/20 + Random.Range(0.1f, 10f), center.y/20 + Random.Range(0.1f, 10f), center.z/20 + Random.Range(0.1f, 10f));
+        //float offsetY = Perlin.Noise((center.x + Random.Range(0.1f, 10f))/20, (center.y / 20 + Random.Range(0.1f, 10f))/20, (center.z / 20 + Random.Range(0.1f, 10f))/20);
 
         //float offsetY = Perlin.Noise(center.x, center.y, center.z);
         //float offsetZ = Perlin.Noise(center.x, center.y, center.z);
