@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class MeshGenerator {
+public static class MeshGenerator
+{
 
     public static MeshData GenerateTerrainMesh(float[,] heightMap)
     {
@@ -69,4 +70,5 @@ public class MeshData
         mesh.RecalculateNormals();
         return mesh;
     }
+
 }
